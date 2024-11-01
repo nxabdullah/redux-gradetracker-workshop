@@ -1,6 +1,6 @@
 # Introduction
 
-Starter code for "Building a grade tracking application with react and redux" workshop with GDG Mississauga.
+Starter code for "Building a grade tracking application with react and redux" workshop with GDSC Mississauga.
 
 ## Getting Started
 
@@ -15,7 +15,7 @@ To get a local copy up and running follow these simple example steps.
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/nxabdullah/SemTrack.git
+   git clone https://github.com/nxabdullah/redux-gradetracker-workshop
    ```
 
 2. Change directory into the app
