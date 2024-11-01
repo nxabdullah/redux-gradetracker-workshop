@@ -23,8 +23,54 @@ const initialState: GradeState = {
   data: {},
 };
 
-// TODO: Add initiate state
-
 // TODO: Create slice & add reducers
+const gradesSlice = createSlice({
+  name: "grades",
+  initialState,
+  reducers: {
+    // add grade
+    addGrade(state: GradeState, action: PayloadAction<Grade>) {
+      const { courseId } = action.payload;
+      state.data[courseId].push({
+        id: nanoid(),
+        name: action.payload.name,
+        grade: action.payload.grade,
+        weight: action.payload.weight,
+        courseId: courseId,
+      });
+    },
+    // remove grade
+    removeGrade(state: GradeState, action: PayloadAction<Grade>) {
+      const { courseId, id } = action.payload;
+
+      const gradeIndex = state.data[courseId].findIndex(
+        (grade) => grade.id === id
+      );
+
+      if (gradeIndex >= 0) {
+        state.data[courseId].splice(gradeIndex, 1);
+      }
+    },
+    // edit grade
+    updateGrade(state: GradeState, action: PayloadAction<Grade>) {
+      const { courseId, id } = action.payload;
+
+      const gradeIndex = state.data[courseId].findIndex(
+        (grade) => grade.id === id
+      );
+
+      if (gradeIndex >= 0) {
+        state.data[courseId][gradeIndex] = action.payload;
+      }
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(addCourse, (state, action: PayloadAction<Course>) => {
+      state.data[action.payload.id] = [];
+    });
+  },
+});
 
 // TODO: Export reducers and actions
+export const { addGrade, updateGrade, removeGrade } = gradesSlice.actions;
+export const gradesReducer = gradesSlice.reducer;

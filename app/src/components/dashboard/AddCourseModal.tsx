@@ -1,8 +1,11 @@
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { useFormik } from "formik";
+import { addCourse } from "../../store";
 
 const AddCourseModal: React.FC = () => {
+  const dispatch = useDispatch();
+
   interface formValues {
     courseName: string;
     courseWeight: number;
@@ -16,6 +19,13 @@ const AddCourseModal: React.FC = () => {
     onSubmit: (values: formValues) => {
       if (values.courseName !== "") {
         // TODO: add course (dispatch)
+        dispatch(
+          addCourse({
+            id: nanoid(),
+            name: values.courseName,
+            weight: values.courseWeight,
+          })
+        );
         closeModal();
       }
     },

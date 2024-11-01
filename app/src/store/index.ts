@@ -1,13 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import { CourseState } from "./slices/coursesSlice";
-import { GradeState } from "./slices/gradesSlice";
+import { courseReducer, CourseState } from "./slices/coursesSlice";
+import { gradesReducer, GradeState } from "./slices/gradesSlice";
 import {
   toastsReducer,
   ToastsState,
   addToast,
   deleteToast,
 } from "./slices/toastsSlice";
+import { addCourse, editCourse, deleteCourse } from "./slices/coursesSlice";
+import { addGrade, updateGrade, removeGrade } from "./slices/gradesSlice";
 
 export interface RootState {
   toasts: ToastsState;
@@ -18,13 +19,25 @@ export interface RootState {
 // TODO:
 const rootReducer = combineReducers({
   toasts: toastsReducer,
+  courses: courseReducer,
+  grades: gradesReducer,
 });
 
 // TODO: configure store
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [thunk],
+  // middleware: [thunk],
 });
 
-// export actions
-export { store, addToast, deleteToast };
+// export actions + store
+export {
+  store,
+  addToast,
+  deleteToast,
+  addCourse,
+  editCourse,
+  deleteCourse,
+  addGrade,
+  updateGrade,
+  removeGrade,
+};

@@ -10,22 +10,36 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import EditCourseModal from "../components/course/EditCourseModal";
 import useToasts from "../hooks/useToasts";
+import { nanoid } from "@reduxjs/toolkit";
 
 function Course() {
+  const dispatch = useDispatch();
   const { courseId } = useParams();
-  // TODO:
-
-  const course = { id: "course1", name: "CSC108", weight: 1 };
-
+  const course: CourseType | undefined = useSelector(
+    (state: RootState): CourseType | undefined => {
+      return state.courses.courses.find(
+        (course: CourseType) => course.id === courseId
+      );
+    }
+  );
   if (!course) {
     return <h1 className="text-3xl">Course not found</h1>;
   }
 
+  // TODO:
   const handleAddGrade = () => {
-    alert("Add Grade clicked! This would normally add a new grade.");
+    // DISPATCH THE CREATE GRADE REDUCER WITH APPROPRIATE ACTION
+    const action = addGrade({
+      id: nanoid(),
+      courseId: course.id,
+      name: "",
+      grade: 0,
+      weight: 0,
+    });
+    dispatch(action);
   };
 
-  // TODO:
+  // TODO: exercise
   const handleDeleteCourse = () => {
     if (window.confirm("Are you sure you want to delete this course?")) {
       alert("Delete Course clicked! This would normally delete the course.");

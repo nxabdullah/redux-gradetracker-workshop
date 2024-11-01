@@ -12,7 +12,6 @@ function App() {
       <main className="container mx-auto px-6 pb-12 py-12">
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/courses/1" element={<Course />} />
           <Route path="/courses/:courseId" element={<Course />} />
         </Routes>
       </main>

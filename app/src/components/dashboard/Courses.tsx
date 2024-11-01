@@ -1,48 +1,41 @@
 import AddCourseModal from "./AddCourseModal";
 import { Link } from "react-router-dom";
 import EmptyRow from "../shared/EmptyRow";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 function Courses() {
-  const renderedCourses = (
-    <>
-      <tr key="course1">
-        <td>
-          <div className="flex items-center space-x-3">
-            <div>
-              <div className="font-bold text-lg">
-                <Link to="/courses/course1">CSC108</Link>
+  const courses = useSelector((state: RootState) => state.courses.courses);
+
+  const renderedCourses = () => {
+    if (courses.length === 0) {
+      return <EmptyRow message="No course found"></EmptyRow>;
+    }
+
+    return courses.map((course) => {
+      return (
+        <tr key={course.id}>
+          <td>
+            <div className="flex items-center space-x-3">
+              <div>
+                <div className="font-bold text-lg">
+                  <Link to={`/courses/${course.id}`}>{course.name}</Link>
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-        <td>87.5%</td>
-        <td>0.5</td>
-        <th>
-          <Link to="/courses/course1">
-            <button className="btn btn-ghost btn-sm">view</button>
-          </Link>
-        </th>
-      </tr>
-      <tr key="course2">
-        <td>
-          <div className="flex items-center space-x-3">
-            <div>
-              <div className="font-bold text-lg">
-                <Link to="/courses/course2">MAT102</Link>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>78.0%</td>
-        <td>0.5</td>
-        <th>
-          <Link to="/courses/course2">
-            <button className="btn btn-ghost btn-sm">view</button>
-          </Link>
-        </th>
-      </tr>
-    </>
-  );
+          </td>
+          {/* TODO: */}
+          <td>%%%</td>
+          <td>{course.weight / 2}</td>
+          <th>
+            <Link to={`/courses/${course.id}`}>
+              <button className="btn btn-ghost btn-sm">view </button>
+            </Link>
+          </th>
+        </tr>
+      );
+    });
+  };
 
   return (
     <>
@@ -68,7 +61,7 @@ function Courses() {
               <th></th>
             </tr>
           </thead>
-          <tbody>{renderedCourses}</tbody>
+          <tbody>{renderedCourses()}</tbody>
         </table>
       </div>
     </>

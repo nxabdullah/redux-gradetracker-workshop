@@ -8,10 +8,9 @@ interface GradesProps {
 }
 
 const Grades: React.FC<GradesProps> = ({ courseId }) => {
-  const grades = [
-    { id: "grade1", name: "Exam", grade: 85, weight: 0.5, courseId: "1" },
-    { id: "grade2", name: "Assignment", grade: 90, weight: 0.5, courseId: "1" },
-  ];
+  const grades = useSelector((state: RootState) => {
+    return state.grades.data[courseId];
+  });
 
   const renderGrades = () => {
     if (!grades || grades.length === 0) {
